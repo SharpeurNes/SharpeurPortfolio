@@ -9,6 +9,7 @@ body {
     background: linear-gradient(135deg, #2d1b69 0%, #3b2175 100%);
     color: #f0f0f0;
     min-height: 100vh;
+    overflow-y: scroll;
 }
 
 /* Variables CSS */
