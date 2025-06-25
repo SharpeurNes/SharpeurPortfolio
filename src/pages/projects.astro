@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+    {
+        title: "KaliyugApp",
+        description: "Android app in Kotlin for a french forum.",
+        image: "images/kaliyugapp.jpg",
+        technologies: ["Kotlin", "AndroidStudio", "Compose"],
+        projectUrl: "https://google.com/",
+        btnName: "",
+        progress: 50
+    },
+    {
+        title: "CoC like",
+        image: "images/coclike.jpg",
+        description: "Fun project Clash of clans like with anime character. Currently in stand-by.",
+        technologies: ["Unity 6", "Blender"],
+        projectUrl: "",
+        progress: 35
+    },
+    {
+        title: "VT Project",
+        description: "2D gacha games made with Unity 6.2 new version. The game will mainly focus on training and grow of a VTuber.",
+        technologies: ["Unity 6.2", "Node.JS"],
+        projectUrl: "",
+        progress: 5
+    }
+];
+---
+
+<Layout title="Projects - Sharpeur" description="Découvrez mes projets de développement en C# et Node.js">
+    <div class="app-container">
+        <Header currentPage="projects" />
+        
+        <main>
+            <div class="projects-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h1>My Projects</h1>
+                        <p>Here is all my projects done or currently in progress.</p>
+                    </div>
+                    
+                    <div class="projects-grid">
+                        {projects.map((project) => (
+                            <ProjectCard
+                                title={project.title}
+                                description={project.description}
+                                image={project.image}
+                                technologies={project.technologies}
+                                projectUrl={project.projectUrl}
+                                btnName={project.btnName}
+                                progress={project.progress}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <Footer author="Sharpeur" />
+    </div>
+</Layout>
+
+<style>
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        padding: 4rem 0;
+    }
+
+    .projects-section {
+        width: 100%;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-purple) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-header p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .section-header h1 {
+            font-size: 2.5rem;
+        }
+        
+        .projects-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .projects-grid {
+            padding: 0 1rem;
+        }
+    }
+</style>

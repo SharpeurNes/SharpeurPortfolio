@@ -1,0 +1,29 @@
+---
+interface Props {
+    author?: string;
+    year?: number;
+}
+
+const { author = "SharpeurNes", year = new Date().getFullYear() } = Astro.props;
+---
+
+<footer>
+    <div class="container">
+        <p>Copyright © {year} | Made with ❤️ by {author}</p>
+    </div>
+</footer>
+
+<style>
+    footer {
+        padding: 2rem 0;
+        text-align: center;
+        color: var(--text-footer);
+        background: rgba(0, 0, 0, 0.2);
+        border-top: 1px solid var(--border-glass);
+        margin-top: auto;
+    }
+
+    footer p {
+        font-size: 0.9rem;
+    }
+</style>

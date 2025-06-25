@@ -1,11 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Sharpeur - C# and NodeJS Developer">
+    <div class="app-container">
+        <Header currentPage="home" />
+        
+        <main>
+            <div class="hero">
+                <h1>Sharpeur</h1>
+                <p>C# and NodeJS Developer</p>
+                <SocialLinks 
+                    email="ton-email@example.com"
+                    twitter="https://twitter.com/ton-handle"
+                />
+            </div>
+        </main>
+
+        <Footer author="SharpeurNes" />
+    </div>
 </Layout>
+
+<style>
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+</style>

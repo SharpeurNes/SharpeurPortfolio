@@ -1,0 +1,71 @@
+---
+// Props pour personnaliser la navigation si besoin
+interface Props {
+    currentPage?: string;
+}
+
+const { currentPage = "home" } = Astro.props;
+---
+
+<header>
+    <nav class="container">
+        <ul>
+            <li><a href="/" class={currentPage === "home" ? "active" : ""}>Home</a></li>
+            <li><a href="/projects" class={currentPage === "projects" ? "active" : ""}>Projects</a></li>
+            <li><a href="/about" class={currentPage === "about" ? "active" : ""}>About</a></li>
+        </ul>
+    </nav>
+</header>
+
+<style>
+    header {
+        padding: 2rem 0;
+        background: var(--background-glass);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-glass);
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    nav a {
+        color: var(--text-medium);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    nav a:hover,
+    nav a.active {
+        color: var(--primary-purple);
+        transform: translateY(-2px);
+    }
+
+    nav a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-purple), var(--primary-purple-dark));
+        transition: width 0.3s ease;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        nav ul {
+            gap: 2rem;
+        }
+    }
+</style>
