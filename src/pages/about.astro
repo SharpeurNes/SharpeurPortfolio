@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ImageShow from '../components/ImageShow.astro';
 ---
 
 <Layout title="About - Sharpeur" description="About me">
@@ -11,25 +11,42 @@ import ProjectCard from '../components/ProjectCard.astro';
         
         <main>
             <div class="main-content">
-                <p>Nothing Yet</p>
+                <h1>About Me</h1>
+                <div class="profile-container">
+                    <div class="profile-wrapper">
+                        <div class="profile-image">
+                            <img src="/images/frifri.jpg" alt="Profile Picture" />
+                            <div class="shine"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>I don't really have anything important to say about myself. So here are some pictures of characters / people / things I like.</p>
+                <ImageShow></ImageShow>
+                <p>And more...</p>
             </div>
-            
         </main>
 
         <Footer author="Sharpeur" />
     </div>
 </Layout>
 
+<link rel="stylesheet" href="/styles/profile-avatar.css" />
+
 <style>
+    .main-content h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-purple) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
     .app-container {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-    }
-
-    main {
-        flex: 1;
-        padding: 4rem 0;
     }
 
     .main-content {
@@ -43,5 +60,6 @@ import ProjectCard from '../components/ProjectCard.astro';
         max-width: 600px;
         margin: 0 auto;
     }
+
 
 </style>

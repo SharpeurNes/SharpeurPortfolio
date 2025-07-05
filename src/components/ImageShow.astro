@@ -1,0 +1,387 @@
+---
+// You can add your images here or pass them as props
+const images = [
+  {
+    src: 'https://i.pinimg.com/736x/d5/c0/42/d5c04235d5ddf8ee14f2c12bed630247.jpg',
+    alt: 'Gallery Image 1',
+    title: 'Übel (eats)'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/10/99/8e/10998e08b5993dfab88a66118ce8f47c.jpg',
+    alt: 'Gallery Image 3',
+    title: 'Toga Himiko'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/e4/f9/e1/e4f9e140810cfb21badd85260254204e.jpg',
+    alt: 'Gallery Image 2',
+    title: 'Rory Mercury'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/ab/c5/74/abc574bb2fa19a234aaed54f163f73a0.jpg',
+    alt: 'Gallery Image 5',
+    title: 'Miyabi (ZZZ)'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/cb/31/8e/cb318e8dafa2d3d4acb5bbbe163dcda4.jpg',
+    alt: 'Gallery Image 6',
+    title: 'Tanya Degurechaff'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/a5/fd/d3/a5fdd37e17db1600c5fc5fe5c41874a3.jpg',
+    alt: 'Gallery Image 4',
+    title: 'Yuuki Konno'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/5c/d9/67/5cd967f277e2d2f49d3211f60d570834.jpg',
+    alt: 'Gallery Image 7',
+    title: 'Nazuna Nanakusa'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/08/b3/97/08b397c963e3a8e8dc7b1bc7b17931ad.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Frieren'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/24/85/b9/2485b90db0baa650e41bdf6697af824f.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Panko Komachi'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/54/68/6d/54686da61eb11dc5a389b88993b280c4.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Pippa Pipkin'
+  },
+  {
+    src: './images/artia-holocn.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Artia (HoloCN)'
+  },
+  {
+    src: './images/monster.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Monster'
+  }
+];
+---
+
+<div class="image-gallery">
+  <div class="gallery-grid">
+    {images.map((image, index) => (
+      <div class="gallery-item" data-index={index}>
+        <img 
+          src={image.src} 
+          alt={image.alt}
+          title={image.title}
+          loading="lazy"
+        />
+        <div class="image-overlay">
+          <span class="image-title">{image.title}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <img id="lightbox-image" src="" alt="">
+      <div class="lightbox-info">
+        <h3 id="lightbox-title"></h3>
+      </div>
+    </div>
+    <button class="lightbox-close">&times;</button>
+  </div>
+</div>
+
+<style>
+  .image-gallery {
+    width: 100%;
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 20px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, auto));
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(102, 126, 234, 0.9));
+    color: white;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover .image-overlay {
+    transform: translateY(0);
+  }
+
+  .image-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Responsive grid adjustments - removed fixed spanning for natural aspect ratios */
+
+  /* Lightbox styles */
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(60, 47, 100, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .lightbox.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+  }
+
+  .lightbox.active .lightbox-content {
+    transform: scale(1);
+  }
+
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .lightbox-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-top: 15px;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  }
+
+  .lightbox-info h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(102, 126, 234, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .lightbox-close:hover {
+    background: rgba(102, 126, 234, 0.5);
+    transform: scale(1.1);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .gallery-grid {
+      columns: 2;
+      column-gap: 15px;
+    }
+    
+    .lightbox-close {
+      top: 10px;
+      right: 15px;
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      columns: 1;
+    }
+  }
+</style>
+
+<script>
+  // Get all gallery items and lightbox elements
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxClose = document.querySelector('.lightbox-close');
+
+  // Images data (should match the Astro data)
+  const images = [
+  {
+    src: 'https://i.pinimg.com/736x/d5/c0/42/d5c04235d5ddf8ee14f2c12bed630247.jpg',
+    alt: 'Gallery Image 1',
+    title: 'Übel (eats)'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/10/99/8e/10998e08b5993dfab88a66118ce8f47c.jpg',
+    alt: 'Gallery Image 3',
+    title: 'Toga Himiko'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/e4/f9/e1/e4f9e140810cfb21badd85260254204e.jpg',
+    alt: 'Gallery Image 2',
+    title: 'Rory Mercury'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/ab/c5/74/abc574bb2fa19a234aaed54f163f73a0.jpg',
+    alt: 'Gallery Image 5',
+    title: 'Miyabi (ZZZ)'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/cb/31/8e/cb318e8dafa2d3d4acb5bbbe163dcda4.jpg',
+    alt: 'Gallery Image 6',
+    title: 'Tanya Degurechaff'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/a5/fd/d3/a5fdd37e17db1600c5fc5fe5c41874a3.jpg',
+    alt: 'Gallery Image 4',
+    title: 'Yuuki Konno'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/5c/d9/67/5cd967f277e2d2f49d3211f60d570834.jpg',
+    alt: 'Gallery Image 7',
+    title: 'Nazuna Nanakusa'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/08/b3/97/08b397c963e3a8e8dc7b1bc7b17931ad.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Frieren'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/24/85/b9/2485b90db0baa650e41bdf6697af824f.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Panko Komachi'
+  },
+  {
+    src: 'https://i.pinimg.com/736x/54/68/6d/54686da61eb11dc5a389b88993b280c4.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Pippa Pipkin'
+  },
+  {
+    src: './images/artia-holocn.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Artia (HoloCN)'
+  },
+  {
+    src: './images/monster.jpg',
+    alt: 'Gallery Image 8',
+    title: 'Monster'
+  }
+];
+
+  // Add click event to each gallery item
+  galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+      if (!lightbox || !lightboxImage || !lightboxTitle) return;
+      
+      const imageData = images[index];
+      
+      // Set lightbox content
+      lightboxImage.src = imageData.src;
+      lightboxImage.alt = imageData.alt;
+      lightboxTitle.textContent = imageData.title;
+      
+      // Show lightbox
+      lightbox.classList.add('active');
+      
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close lightbox function
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close button click
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', closeLightbox);
+  }
+
+  // Click outside image to close
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+</script>

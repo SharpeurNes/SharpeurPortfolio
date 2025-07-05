@@ -9,6 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.10.1"
+    "astro": "^5.10.1",
+    "choco": "^0.2.1"
+  },
+  "devDependencies": {
+    "vite-plugin-mkcert": "^1.17.8"
   }
 }

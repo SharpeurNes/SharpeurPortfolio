@@ -6,13 +6,11 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
     {
-        title: "KaliyugApp",
-        description: "Android app in Kotlin for a french forum.",
-        image: "images/kaliyugapp.jpg",
-        technologies: ["Kotlin", "AndroidStudio", "Compose"],
-        projectUrl: "https://google.com/",
-        btnName: "",
-        progress: 50
+        title: "VT Project",
+        description: "Gacha games made with Unity 6.2 new version. This game will mainly focus on training and grow of a VTuber with roguelike aspect.",
+        technologies: ["Unity 6.2", "Node.JS", "v0.1.0"],
+        projectUrl: "",
+        progress: 5
     },
     {
         title: "CoC like",
@@ -22,12 +20,15 @@ const projects = [
         projectUrl: "",
         progress: 35
     },
+    
     {
-        title: "VT Project",
-        description: "2D gacha games made with Unity 6.2 new version. The game will mainly focus on training and grow of a VTuber.",
-        technologies: ["Unity 6.2", "Node.JS"],
-        projectUrl: "",
-        progress: 5
+        title: "KaliyugApp",
+        description: "Android app in Kotlin for a french forum.",
+        image: "images/kaliyugapp.jpg",
+        technologies: ["Kotlin", "AndroidStudio", "Compose"],
+        projectUrl: "https://google.com/",
+        btnName: "",
+        progress: 50
     }
 ];
 ---
@@ -74,7 +75,7 @@ const projects = [
 
     main {
         flex: 1;
-        padding: 4rem 0;
+        padding: 2rem 0;
     }
 
     .projects-section {
