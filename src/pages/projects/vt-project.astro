@@ -1,0 +1,799 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const defaultVersionId = 2;
+
+const versions = [
+    {
+        id: 1,
+        title: "Starting Project",
+        number: "v0.0",
+        content: [
+            "# Start of the VTuber Gacha Project ",
+            "NodeJS server, MongoDB local",
+            "Create and load user profile",
+        ],
+        images: [
+            {
+                src: "/images/derby5.gif",
+                alt: "Main UI",
+                fullWidth: true,
+            },
+        ],
+    },
+    {
+        id: 2,
+        title: "Foundation Update",
+        number: "v0.1",
+        content: [
+            "# Authentification system",
+            "Login Register system",
+            "Save local settings and cookie",
+            "Update data on server",
+            "",
+            "# Loading data",
+            "Async GameLoader",
+            "API data Characters on server, loaded at game launch",
+            "Loading Screen with good loading scene management",
+            "",
+            "# User interface",
+            "Profime Menu added",
+            "Main UI done",
+        ],
+        images: [
+            {
+                src: "/images/0.1.2.png",
+                alt: "Main UI",
+                fullWidth: true,
+            },
+            {
+                src: "/images/0.1.4.png",
+                alt: "Profile Menu",
+                fullWidth: true,
+            },
+        ],
+    },
+    {
+        id: 3,
+        title: "In Dev Phase",
+        number: "TBD",
+        content: [
+            "# Core Game",
+            "Inventory Character and its Menu. Server side already done",
+            "Settings Menu",
+            "Energy System",
+            "Menu showing every Career",
+            "Support card system or something similar",
+            "Quests and progression",
+            "UI claim rewards",
+            "Success system and UI",
+            "Daily Quests",
+            "Items Inventory",
+            "In game Shop with game money",
+            "Friend system & friends list",
+            "# Narration et organisation",
+            "History and Visual Novel system",
+            "Agency System (=Guilde)",
+            "# Career Gameplay",
+            "Define every rules about each career (rounds, events...)",
+            "Every UI related to career gameplay",
+            "Stats system",
+            "Legacy system",
+            "Skills system (buy skills)",
+            "Randoms events every rounds",
+            "# Visual Update",
+            "Click Effect",
+            "Animated loading screen background with icons",
+            "Redo Login and Register menu",
+            "Animation transition between each menu",
+            "Character model, Character Sprite, Live2D or 3D model?",
+        ],
+        images: [
+            {
+                src: "/images/derby5.gif",
+                alt: "Main UI",
+                fullWidth: true,
+            },
+        ],
+    },
+];
+
+const defaultVersionIndex = versions.findIndex(
+    (v) => v.id === defaultVersionId,
+);
+const defaultVersion = versions[defaultVersionIndex] || versions[0];
+---
+
+<Layout title="VT Project - Sharpeur" description="Info about VT Project">
+    <div class="app-container">
+        <Header currentPage="" />
+
+        <main>
+            <div class="project-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h1>VT Project</h1>
+                        <p>
+                            Roguelike Gacha games inspired by Uma Musume: Pretty
+                            Derby and Blue Archive.
+                        </p>
+                        <p>
+                            Create your own VTuber agency, recrute talents and
+                            make them shine.
+                        </p>
+                    </div>
+
+                    <div class="devblog-container">
+                        <!-- Navigation Header -->
+                        <div class="devblog-header">
+                            <button class="nav-arrow" id="prevBtn">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <polyline points="15,18 9,12 15,6"
+                                    ></polyline>
+                                </svg>
+                            </button>
+
+                            <div class="version-selector">
+                                <select
+                                    id="versionSelect"
+                                    class="version-dropdown"
+                                >
+                                    {
+                                        versions.map((version, index) => (
+                                            <option
+                                                value={index}
+                                                selected={
+                                                    version.id ===
+                                                    defaultVersionId
+                                                }
+                                            >
+                                                {version.title} -{" "}
+                                                {version.number}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                                <div class="version-title" id="versionTitle">
+                                    <h2>{defaultVersion.title}</h2>
+                                    <span class="version-number"
+                                        >{defaultVersion.number}</span
+                                    >
+                                </div>
+                            </div>
+
+                            <button class="nav-arrow" id="nextBtn">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <polyline points="9,18 15,12 9,6"
+                                    ></polyline>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Content Area -->
+                        <div class="devblog-content" id="content">
+                            <div class="content-text">
+                                {
+                                    defaultVersion.content.map((item) => {
+                                        if (item.startsWith("# ")) {
+                                            return (
+                                                <div class="content-subtitle">
+                                                    <h3>{item.substring(2)}</h3>
+                                                </div>
+                                            );
+                                        } else if (item.trim() !== "") {
+                                            return (
+                                                <div class="content-item">
+                                                    <span class="bullet">-</span>
+                                                    <span class="text">{item}</span>
+                                                </div>
+                                            );
+                                        } else {
+                                            return <div class="content-spacer"></div>;
+                                        }
+                                    })
+                                }
+                            </div>
+
+                            <div class="content-images">
+                                {
+                                    defaultVersion.images.map((image) => (
+                                        <div
+                                            class={`image-container ${image.fullWidth ? "full-width" : "half-width"}`}
+                                        >
+                                            <img
+                                                src={image.src}
+                                                alt={image.alt}
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <p style="color: rgb(227, 103, 103); font-size:0.7rem; text-align:center;">
+        All visuals are placeholders, made with AI or copyrighted content. They
+        are all for personal and private use. This does not reflect the final
+        product, which will feature real artists and original content.
+    </p><br />
+    <Footer author="Sharpeur" />
+</Layout>
+
+<style>
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        padding: 2rem 0;
+    }
+
+    .project-section {
+        width: 100%;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .section-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+            135deg,
+            var(--text-light) 0%,
+            var(--primary-purple) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-header p {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .section-header h1 {
+            font-size: 2.5rem;
+        }
+
+        .projects-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .projects-grid {
+            padding: 0 1rem;
+        }
+    }
+
+    .devblog-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family:
+            "Inter",
+            -apple-system,
+            BlinkMacSystemFont,
+            sans-serif;
+        background: linear-gradient(135deg, #301a61 0%, #1d1244 100%);
+        border-radius: 12px;
+        color: #c6b4d6;
+        overflow: hidden;
+    }
+
+    .devblog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        padding: 20px 0;
+        border-bottom: 2px solid #333;
+    }
+
+    .nav-arrow {
+        background: #201140;
+        border: 1px solid #404040;
+        border-radius: 8px;
+        color: #e5e5e5;
+        cursor: pointer;
+        padding: 12px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-arrow:hover {
+        background: #301a61;
+        border-color: #555;
+        transform: translateY(-1px);
+    }
+
+    .nav-arrow:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .version-selector {
+        position: relative;
+        flex: 1;
+        margin: 0 20px;
+        text-align: center;
+    }
+
+    .version-dropdown {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .version-title {
+        background: linear-gradient(135deg, #663dbd, #5330a0);
+        color: rgb(235, 217, 217);
+        padding: 16px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(57, 52, 145, 0.3);
+    }
+
+    .version-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+    }
+
+    .version-title h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .version-number {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: bold;
+        opacity: 0.9;
+        margin-top: 5px;
+        color: #e0e7ff;
+    }
+
+    :global(.devblog-content) {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .content-text {
+        margin: 0 auto 30px auto;
+        background: rgba(37, 37, 37, 0.8);
+        border: 1px solid rgba(102, 61, 189, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 85%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Nouveau style pour les sous-titres */
+    :global(.content-subtitle) {
+        margin: 20px 0 12px 0;
+        padding: 8px 0;
+        border-bottom: 2px solid rgba(102, 61, 189, 0.4);
+    }
+
+    :global(.content-subtitle:first-of-type) {
+    margin-top: 0;
+}
+
+    :global(.content-subtitle h3) {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #a78bfa;
+        background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    :global(.content-item) {
+        align-items: flex-start;
+        padding: 4px 0;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+        margin-left: 15px; /* Légère indentation pour les éléments de liste */
+    }
+
+    :global(.content-item:hover) {
+        background: rgba(37, 37, 37, 0.6);
+        padding-left: 8px;
+    }
+
+    /* Espacement entre les sections */
+    .content-spacer {
+        height: 10px;
+    }
+
+    .bullet {
+        color: #663dbd;
+        font-weight: bold;
+        margin-right: 12px;
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .text {
+        flex: 1;
+        line-height: 1.6;
+        color: #e5e5e5;
+    }
+
+    .content-images {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        box-sizing: border-box;
+    }
+
+    .image-container {
+        border: 2px solid rgba(102, 61, 189, 0.3);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background: rgba(32, 17, 64, 0.5);
+    }
+
+    .image-container:hover {
+        transform: translateY(-4px);
+        border-color: rgba(102, 61, 189, 0.6);
+        box-shadow: 0 8px 25px rgba(102, 61, 189, 0.3);
+    }
+
+    .half-width {
+        flex: 1;
+        min-width: 280px;
+        max-width: 350px;
+    }
+
+    .full-width {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100% !important;
+        max-width: calc(100% - 40px) !important;
+    }
+
+    .image-container img {
+        width: 100%;
+        display: block;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .image-container:hover img {
+        transform: scale(1.05);
+    }
+
+    .half-width img {
+        height: 250px !important;
+    }
+
+    .full-width img {
+        height: 300px !important;
+    }
+
+    /* Gestion des versions sans images */
+    .no-images .content-text {
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+        .devblog-container {
+            padding: 16px;
+        }
+
+        .devblog-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            margin-bottom: 20px;
+        }
+
+        .version-selector {
+            margin: 0 !important;
+            width: auto !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .version-title {
+            padding: 10px 12px !important;
+            min-width: 0 !important;
+        }
+
+        .version-title h2 {
+            font-size: 1rem !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .version-number {
+            font-size: 0.75rem !important;
+            margin-top: 2px !important;
+        }
+
+        .nav-arrow {
+            padding: 8px !important;
+            flex-shrink: 0 !important;
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        .nav-arrow svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        .content-images {
+            flex-direction: column;
+        }
+
+        .half-width,
+        .full-width {
+            flex: 1 1 100%;
+        }
+
+        .content-subtitle h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #a78bfa;
+            background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-item {
+            margin-left: 10px;
+        }
+    }
+</style>
+
+<script>
+    //DESACTIVER CLIQUE DROIT
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Méthode 2: Désactiver F12, Ctrl+Shift+I, Ctrl+U, etc.
+    document.addEventListener("keydown", function (e) {
+        // F12
+        if (e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Ctrl+Shift+I (Outils de développement)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Ctrl+Shift+J (Console)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Ctrl+U (Code source)
+        if (e.ctrlKey && e.keyCode === 85) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Ctrl+S (Sauvegarder)
+        if (e.ctrlKey && e.keyCode === 83) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+<script define:vars={{ versions, defaultVersionId }}>
+    // Les données sont maintenant passées directement depuis le serveur
+
+    // Trouver l'index de la version par défaut
+    let currentVersionIndex = versions.findIndex(
+        (v) => v.id === defaultVersionId,
+    );
+    if (currentVersionIndex === -1) currentVersionIndex = 0;
+
+    // Éléments DOM
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const versionSelect = document.getElementById("versionSelect");
+    const versionTitle = document.getElementById("versionTitle");
+    const content = document.getElementById("content");
+
+    // Fonction pour générer le HTML d'un élément de contenu
+    function generateContentHTML(item) {
+        if (item.startsWith("# ")) {
+            return `
+                <div class="content-subtitle">
+                    <h3>${item.substring(2)}</h3>
+                </div>
+            `;
+        } else if (item.trim() !== "") {
+            return `
+                <div class="content-item">
+                    <span class="bullet">-</span>
+                    <span class="text">${item}</span>
+                </div>
+            `;
+        } else {
+            return '<div class="content-spacer"></div>';
+        }
+    }
+
+    // Fonction pour mettre à jour le contenu
+    function updateContent(index) {
+        const version = versions[index];
+
+        // Mettre à jour le titre
+        versionTitle.innerHTML = `
+            <h2>${version.title}</h2>
+            <span class="version-number">${version.number}</span>
+        `;
+
+        // Mettre à jour le contenu avec animation
+        content.style.opacity = "0";
+
+        
+
+        setTimeout(() => {
+            // Mettre à jour le texte
+            const contentText = content.querySelector(".content-text");
+            contentText.innerHTML = version.content
+                .map(item => generateContentHTML(item))
+                .join("");
+
+            // Mettre à jour les images
+            const contentImages = content.querySelector(".content-images");
+            console.log("Images à afficher:", version.images); // DEBUG
+
+            contentImages.innerHTML = version.images
+                .map((image) => {
+                    return `
+                        <div class="image-container ${image.fullWidth ? "full-width" : "half-width"}" style="overflow: hidden;">
+                            <img src="${image.src}" alt="${image.alt}" loading="lazy" style="max-width: 100%; max-height:400px; object-fit: contain; " />
+                        </div>
+                    `;
+                })
+                .join("");
+
+            content.style.opacity = "1";
+        }, 150);
+
+        // Mettre à jour le select
+        versionSelect.value = index;
+
+        // Mettre à jour les boutons
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === versions.length - 1;
+    }
+
+    // Event listeners
+    prevBtn.addEventListener("click", () => {
+        if (currentVersionIndex > 0) {
+            currentVersionIndex--;
+            updateContent(currentVersionIndex);
+        }
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if (currentVersionIndex < versions.length - 1) {
+            currentVersionIndex++;
+            updateContent(currentVersionIndex);
+        }
+    });
+
+    versionSelect.addEventListener("change", (e) => {
+        currentVersionIndex = parseInt(e.target.value);
+        updateContent(currentVersionIndex);
+    });
+
+    // Clic sur le titre pour ouvrir le sélecteur
+    versionTitle.addEventListener("click", () => {
+        versionSelect.focus();
+        versionSelect.click();
+    });
+
+    // Navigation au clavier
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft" && currentVersionIndex > 0) {
+            currentVersionIndex--;
+            updateContent(currentVersionIndex);
+        } else if (
+            e.key === "ArrowRight" &&
+            currentVersionIndex < versions.length - 1
+        ) {
+            currentVersionIndex++;
+            updateContent(currentVersionIndex);
+        }
+    });
+
+    // Initialisation
+    updateContent(currentVersionIndex);
+</script>
