@@ -1,0 +1,413 @@
+---
+const DISCORD_USER_ID = "865640339083624479";
+
+let userData = null;
+let error = null;
+
+try {
+  const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+  const data = await response.json();
+  
+  if (data.success) {
+    userData = data.data;
+  } else {
+    error = "Unable to fetch Discord data";
+  }
+} catch (e) {
+  error = "Error connecting to Lanyard API";
+}
+
+// Fonction pour obtenir la couleur du statut
+function getStatusColor(status) {
+  switch (status) {
+    case 'online': return '#23a55a';
+    case 'idle': return '#f0b232';
+    case 'dnd': return '#f23f42';
+    case 'offline': 
+    default: return '#80848e';
+  }
+}
+
+// Fonction pour obtenir le texte du statut
+function getStatusText(status) {
+  switch (status) {
+    case 'online': return 'Online';
+    case 'idle': return 'Away';
+    case 'dnd': return 'Do not disturb';
+    case 'offline': 
+    default: return 'Offline';
+  }
+}
+
+// Fonction pour formater le temps écoulé
+function formatElapsedTime(startTimestamp) {
+  const now = Date.now();
+  const elapsed = now - startTimestamp;
+  const minutes = Math.floor(elapsed / 60000);
+  const hours = Math.floor(minutes / 60);
+  
+  if (hours > 0) {
+    return `${hours}h ${minutes % 60}m`;
+  }
+  return `${minutes}m`;
+}
+
+// Filtrer les activités pour séparer Custom Status des autres
+const customStatus = userData?.activities?.find(activity => activity.type === 4);
+const regularActivities = userData?.activities?.filter(activity => activity.type !== 4) || [];
+---
+
+<div class="discord-status">
+  <div class="header">
+    <h2 class="title">Discord</h2>
+  </div>
+  
+  {error ? (
+    <div class="error">
+      <p>{error}</p>
+    </div>
+  ) : userData ? (
+    <>
+      <div class="main-info">
+        <div class="left-section">
+          <div class="avatar-container">
+            <img 
+              src={`https://cdn.discordapp.com/avatars/${userData.discord_user.id}/${userData.discord_user.avatar}.png?size=128`}
+              alt={`Avatar of ${userData.discord_user.display_name}`}
+              class="avatar"
+            />
+            <div 
+              class="status-indicator"
+              style={`background-color: ${getStatusColor(userData.discord_status)}`}
+            ></div>
+          </div>
+          
+          <div class="user-details">
+            <p class="username">@SharpeurNes</p>
+            <p class="status">{getStatusText(userData.discord_status)}</p>
+          </div>
+        </div>
+
+        {regularActivities.length > 0 && (
+          <div class="activity">
+            <div class="activity-header">
+              <span class="activity-label">Activity</span>
+            </div>
+            <div class="activity-list">
+              {regularActivities.map((activity) => (
+                <div class="activity-item" key={activity.id}>
+                  <div class="activity-info">
+                    <p class="activity-name">{activity.name}</p>
+                    {activity.timestamps && activity.timestamps.start && (
+                      <p class="activity-time">
+                        for {formatElapsedTime(activity.timestamps.start)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {customStatus && (
+        <div class="custom-status">
+          <div class="custom-status-header">
+            <span class="custom-status-label">Status</span>
+          </div>
+          <div class="custom-status-content">
+            {customStatus.state && (
+              <span class="custom-status-text">{customStatus.state}</span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {userData.listening_to_spotify && userData.spotify && (
+        <div class="spotify">
+          <div class="spotify-header">
+            <span class="spotify-label">🎵 Listening to Spotify</span>
+          </div>
+          <div class="spotify-info">
+            <img 
+              src={userData.spotify.album_art_url}
+              alt={`Album cover of ${userData.spotify.album}`}
+              class="spotify-album"
+            />
+            <div class="spotify-text">
+              <p class="spotify-song">{userData.spotify.song}</p>
+              <p class="spotify-artist">{userData.spotify.artist}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  ) : (
+    <div class="loading">
+      <p>Loading...</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .discord-status {
+    margin-top: 30px;
+    background: linear-gradient(135deg, #2c1a66 0%, #3b2175 100%);
+    border-radius: 16px;
+    padding: 16px;
+    color: #f0f0f0;
+    text-shadow: rgba(192, 132, 252, 0.737) 0px 0px 27.8717px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 350px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .header {
+    margin-bottom: 12px;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    opacity: 0.9;
+    text-align: center;
+  }
+
+  .main-info {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+  }
+
+  .avatar-container {
+    position: relative;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .status-indicator {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #2c2f33;
+  }
+
+  .user-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .username {
+    margin: 0 0 3px 0;
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 1.1;
+    font-weight: 500;
+  }
+
+  .status {
+    margin: 0;
+    font-size: 11px;
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 5px;
+    border-radius: 5px;
+    display: inline-block;
+    line-height: 1.1;
+  }
+
+  .activity {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 120px;
+  }
+
+  .activity-header {
+    margin-bottom: 5px;
+  }
+
+  .activity-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.6;
+    letter-spacing: 0.3px;
+  }
+
+  .activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .activity-list:has(> .activity-item:nth-child(2)) {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .activity-list:has(> .activity-item:nth-child(2)) .activity-item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .activity-name {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .activity-time {
+    margin: 0;
+    font-size: 9px;
+    opacity: 0.5;
+  }
+
+  .custom-status {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    margin-bottom: 2px;
+  }
+
+  .custom-status-header {
+    margin-bottom: 4px;
+  }
+
+  .custom-status-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.6;
+    letter-spacing: 0.3px;
+  }
+
+  .custom-status-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .custom-status-emoji {
+    font-size: 14px;
+  }
+
+  .custom-status-text {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.8;
+    color: #f0f0f0;
+  }
+
+  .spotify {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 8px;
+  }
+
+  .spotify-header {
+    margin-bottom: 8px;
+  }
+
+  .spotify-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .spotify-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spotify-album {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  .spotify-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .spotify-song {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .spotify-artist {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.7;
+    line-height: 1.2;
+  }
+
+  .error, .loading {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .error {
+    background: rgba(242, 63, 66, 0.1);
+    border: 1px solid rgba(242, 63, 66, 0.3);
+    border-radius: 8px;
+    color: #f23f42;
+  }
+
+  /* Animation pour un effet plus dynamique */
+  .discord-status {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Hover effect */
+  .discord-status:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+  }
+</style>
