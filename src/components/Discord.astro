@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 const DISCORD_USER_ID = "865640339083624479";
 
 let userData = null;
@@ -18,7 +19,7 @@ try {
 }
 
 // Fonction pour obtenir la couleur du statut
-function getStatusColor(status) {
+function getStatusColor(status: any) {
   switch (status) {
     case 'online': return '#23a55a';
     case 'idle': return '#f0b232';
@@ -29,7 +30,7 @@ function getStatusColor(status) {
 }
 
 // Fonction pour obtenir le texte du statut
-function getStatusText(status) {
+function getStatusText(status: any) {
   switch (status) {
     case 'online': return 'Online';
     case 'idle': return 'Away';
@@ -40,7 +41,7 @@ function getStatusText(status) {
 }
 
 // Fonction pour formater le temps écoulé
-function formatElapsedTime(startTimestamp) {
+function formatElapsedTime(startTimestamp: number) {
   const now = Date.now();
   const elapsed = now - startTimestamp;
   const minutes = Math.floor(elapsed / 60000);
@@ -53,8 +54,8 @@ function formatElapsedTime(startTimestamp) {
 }
 
 // Filtrer les activités pour séparer Custom Status des autres
-const customStatus = userData?.activities?.find(activity => activity.type === 4);
-const regularActivities = userData?.activities?.filter(activity => activity.type !== 4) || [];
+const customStatus = userData?.activities?.find((activity: { type: number; }) => activity.type === 4);
+const regularActivities = userData?.activities?.filter((activity: { type: number; }) => activity.type !== 4) || [];
 ---
 
 <div class="discord-status">
@@ -94,7 +95,7 @@ const regularActivities = userData?.activities?.filter(activity => activity.type
               <span class="activity-label">Activity</span>
             </div>
             <div class="activity-list">
-              {regularActivities.map((activity) => (
+              {regularActivities.map((activity: { id: any; name: unknown; timestamps: { start: any; }; }) => (
                 <div class="activity-item" key={activity.id}>
                   <div class="activity-info">
                     <p class="activity-name">{activity.name}</p>
