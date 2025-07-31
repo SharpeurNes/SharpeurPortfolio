@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^8.2.3",
     "astro": "^5.10.1",
     "choco": "^0.2.1"
   },
