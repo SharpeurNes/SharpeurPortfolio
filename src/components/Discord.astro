@@ -1,12 +1,11 @@
 ---
-export const prerender = false;
 const DISCORD_USER_ID = "865640339083624479";
 
 let userData = null;
 let error = null;
 
 try {
-  const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+  const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}?t=${Date.now()}`);
   const data = await response.json();
   
   if (data.success) {
