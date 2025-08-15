@@ -1,21 +1,21 @@
 {
   "headers": [
     {
-      "source": "../xd-fortnite-lobby/test-build/Build/(.*)\\.js\\.br",
+      "source": "/(.*)\\.js\\.br",
       "headers": [
         { "key": "Content-Encoding", "value": "br" },
         { "key": "Content-Type", "value": "application/javascript" }
       ]
     },
     {
-      "source": "../xd-fortnite-lobby/test-build/Build/(.*)\\.wasm\\.br",
+      "source": "/(.*)\\.wasm\\.br",
       "headers": [
         { "key": "Content-Encoding", "value": "br" },
         { "key": "Content-Type", "value": "application/wasm" }
       ]
     },
     {
-      "source": "../xd-fortnite-lobby/test-build/Build/(.*)\\.data\\.br",
+      "source": "/(.*)\\.data\\.br",
       "headers": [
         { "key": "Content-Encoding", "value": "br" },
         { "key": "Content-Type", "value": "application/octet-stream" }
