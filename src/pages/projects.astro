@@ -6,9 +6,17 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
     {
+        title: "Xelorium",
+        image: "images/xelorium.png",
+        description: "2D Isometric game with turn based combat 🤐",
+        technologies: ["Unity 6.2", "2D", "Isometric"],
+        projectUrl: "./projects/xelorium",
+        btnName:"More info",
+        progress: 0.7
+    },{
         title: "VT Project",
         image: "images/0.1.2.png",
-        description: "Gacha games made with Unity 6.2 new version. This game will mainly focus on training and grow of a VTuber with roguelike aspect.",
+        description: "Inspired by Uma Musume. Rogue-like training game, but with VTuber involved.",
         technologies: ["Unity 6.2", "Node.JS", "v0.1.0"],
         projectUrl: "./projects/vt-project",
         btnName:"More Info",
@@ -16,19 +24,19 @@ const projects = [
     },{
         title: "Fortnite Lobby",
         image: "images/ft-lobby-1.png",
-        description: "Recreation of the Fortnite main menu and integration of emotes/dances, testable online with Unity's WebGL (when finished). Project made for fun.",
+        description: "Recreation of the Fortnite main menu and integration of emotes/dances, testable online with Unity's WebGL.",
         technologies: ["Unity 6.2", "WebGL", "Blender", "FortnitePorting"],
         projectUrl: "./projects/fortnite-lobby",
         btnName:"Try it",
-        progress: 90
+        progress: 99
     },{
-        title: "Idle VTuber",
+        title: "Idle Game",
         image: "images/coming-soon.png",
         description: "Small project inspired by a lot of idle games.",
         technologies: ["Unity 6.2", "Live2D"],
         projectUrl: "",
         btnName:"",
-        progress: 1
+        progress: 0
     },
     {
         title: "CoC like",
@@ -52,7 +60,7 @@ const projects = [
         technologies: ["Kotlin", "AndroidStudio", "Compose"],
         projectUrl: "",
         btnName: "",
-        progress: 50
+        progress: 45
     }
 ];
 ---
