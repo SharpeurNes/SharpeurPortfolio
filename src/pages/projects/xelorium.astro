@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 
-const defaultVersionId = 1;
+const defaultVersionId = 2;
 
 const versions = [
     {
@@ -21,7 +21,7 @@ const versions = [
         ],
         images: [
             {
-                src: "/images/xelorium/1.png",
+                src: "/images/xelorium/xelorium-logo.png",
                 alt: "Main UI",
                 fullWidth: false,
             },
@@ -29,16 +29,26 @@ const versions = [
     },
     {
         id: 2,
-        title: "What next?",
-        number: "0.2.0",
+        title: "Tilemap",
+        number: "0.1.1",
         content: [
-            "# Nothing done yet",
-            "I will probably start the map system, character moving and camera...",
+            "# Tilemap change",
+            "Starting map creation",
+            "ScriptableObject MapData for saving maps",
+            "Save and MapLoader for testing maps",
+            "PlayerController, Pathfinding working well (8 dirctions, interupt possible, detect if walkable tile or not)",
+            "# 0.1.1b",
+            "Small UI update for Welcome (login) scene",
         ],
         images: [
             {
+                src: "/images/xelorium/xelorium1-1.png",
+                alt: "Profile Menu",
+                fullWidth: true,
+            },
+            {
                 src: "https://media1.tenor.com/m/leS9PCjJ3QgAAAAC/live-live-reaction.gif",
-                alt: "Main UI",
+                alt: "Tilemap UI",
                 fullWidth: false,
             },
         ],
