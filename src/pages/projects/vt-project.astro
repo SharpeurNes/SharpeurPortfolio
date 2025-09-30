@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 
-const defaultVersionId = 2;
+const defaultVersionId = 3;
 
 const versions = [
     {
@@ -57,6 +57,24 @@ const versions = [
     },
     {
         id: 3,
+        title: "UI and Loading Update",
+        number: "v0.2",
+        content: [
+            "# UI Change",
+            "In game UI Update",
+            "# New loading",
+            "Async into Task"
+        ],
+        images: [
+            {
+                src: "/images/vt-project/0.2.0.png",
+                alt: "Main UI",
+                fullWidth: true,
+            }
+        ],
+    },
+    {
+        id: 4,
         title: "In Dev Phase",
         number: "TBD",
         content: [
